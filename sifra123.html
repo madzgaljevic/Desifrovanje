@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Šifrovanje i Dešifrovanje</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Šifrovanje i Dešifrovanje Poruka</h1>
+
+    <div class="container">
+        <label for="inputMessage">Unesite poruku:</label><br>
+        <input type="text" id="inputMessage" placeholder="Unesite tekst" /><br>
+
+        <button onclick="encryptMessage()">Šifruj</button>
+        <button onclick="decryptMessage()">Dešifruj</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Pravila šifrovanja
+        const cipherDict = {
+            'A': 'I', 'B': 'H', 'C': 'G', 'D': 'F', 'E': 'E',
+            'F': 'D', 'G': 'C', 'H': 'B', 'I': 'A', 'J': 'S',
+            'K': 'R', 'L': 'Q', 'M': 'P', 'Q': 'L', 'R': 'K',
+            'S': 'J', 'T': 'Y', 'U': 'X', 'V': 'W', 'W': 'V',
+            'Y': 'T', 'Z': 'Z'
+        };
+
+        // Kreiraj obrnuti rječnik za dešifrovanje
+        const decipherDict = Object.fromEntries(
+            Object.entries(cipherDict).map(([key, value]) => [value, key])
+        );
+
+        // Funkcija za šifrovanje
+        function encryptMessage() {
+            let message = document.getElementById('inputMessage').value.toUpperCase();
+            let encryptedMessage = '';
+
+            for (let char of message) {
+                if (cipherDict[char]) {
+                    encryptedMessage += cipherDict[char];
+                } else {
+                    encryptedMessage += char; // Ako karakter nije slovo, ostaje isti
+                }
+            }
+
+            document.getElementById('result').innerText = 'Šifrovana poruka: ' + encryptedMessage;
+        }
+
+        // Funkcija za dešifrovanje
+        function decryptMessage() {
+            let message = document.getElementById('inputMessage').value.toUpperCase();
+            let decryptedMessage = '';
+
+            for (let char of message) {
+                if (decipherDict[char]) {
+                    decryptedMessage += decipherDict[char];
+                } else {
+                    decryptedMessage += char; // Ako karakter nije slovo, ostaje isti
+                }
+            }
+
+            document.getElementById('result').innerText = 'Dešifrovana poruka: ' + decryptedMessage;
+        }
+    </script>
+
+</body>
+</html>
